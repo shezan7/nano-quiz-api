@@ -6,7 +6,9 @@ const { INTEGER, STRING, JSON } = DataTypes
 
 const quiz = sequelize.define('quiz', {
     quiz_name: {
-        type: STRING
+        type: STRING,
+        allowNull: false,
+        unique: true
     },
     total_question: {
         type: INTEGER
