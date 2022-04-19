@@ -138,3 +138,39 @@ exports.create_quizDetails = async (req, res, next) => {
     }
 }
 
+exports.view_AllQuizDetailsAdmin = async (req, res, next) => {
+    try {
+        const quizDetailsAdmin = await db.query(
+            `SELECT
+                u.id,
+                u.email,
+                u.name,
+                eh.id,
+                eh.quiz_name,
+                eh.total_question,
+                eh.time,
+                eh.marks,
+                eh.rank
+            FROM
+                quiz_app.users u,
+                quiz_app.exam_history eh,
+                quiz_app.user_exam_history_mapping uehm
+            WHERE
+                u.id = uehm.user_id
+                AND eh.id = uehm.exam_history_id;`
+            , {
+                type: QueryTypes.SELECT
+            })
+
+        res.json({
+            message: "Find successfully", quizDetailsAdmin
+        })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({
+            error: err
+        })
+    }
+
+}
