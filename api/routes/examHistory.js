@@ -17,7 +17,7 @@ router.post("/exam-history/create-quiz-details", checkUser(16), ExamHistoryContr
 
 router.get("/exam-history/view-all-quiz-details-admin", checkUser(15), ExamHistoryController.view_AllQuizDetailsAdmin);
 
-// router.get("/exam-history/view-all-quiz-details-tutor", checkUser(4), ExamHistoryController.view_AllQuizDetailsTutor);
+router.get("/exam-history/view-all-quiz-details-tutor", checkUser(4), ExamHistoryController.view_AllQuizDetailsTutor);
 
 
 

@@ -5,6 +5,8 @@ const { QueryTypes } = require('sequelize')
 const sequelizeExamHistory = require('../sequelize-models/ExamHistory')
 const sequelizeUserExamHistoryMapping = require('../sequelize-models/UserExamHistoryMapping')
 
+const sequelizeUserQuizMapping = require('../sequelize-models/UserQuizMapping')
+
 
 exports.view_AllQuizDetails = async (req, res, next) => {
     try {
@@ -174,3 +176,63 @@ exports.view_AllQuizDetailsAdmin = async (req, res, next) => {
     }
 
 }
+
+exports.view_AllQuizDetailsTutor = async (req, res, next) => {
+
+    // console.log("one", req.user.id);
+
+    // const userQuizlist = [];
+    // const findUserId = await sequelizeUserQuizMapping.findAll({
+    //     where: {
+    //         user_id: req.user.id,
+    //     },
+    //     attributes: ["quiz_id"]
+    // })
+    // findUserId.map((val) => {
+    //     userQuizlist.push(val.quiz_id)
+    // })
+    // console.log("list", userQuizlist);
+
+    try {
+        if (userQuizlist === undefined || userQuizlist.length === 0) {
+            console.log("two")
+            return res.status(404).send({ message: "Quiz is not found!!!" });
+        } else {
+            const quizDetailsTutor = await db.query(
+                `SELECT
+                    u.id,
+                    u.email,
+                    u.name,
+                    eh.id,
+                    eh.quiz_name,
+                    eh.total_question,
+                    eh.time,
+                    eh.marks,
+                    eh.rank
+                FROM
+                    quiz_app.users u,
+                    quiz_app.exam_history eh,
+                    quiz_app.user_exam_history_mapping uehm
+                WHERE
+                    u.id = uehm.user_id
+                    AND eh.id = uehm.exam_history_id;`
+                , {
+                    type: QueryTypes.SELECT
+                })
+
+            res.json({
+                message: "Find successfully", quizDetailsTutor
+            })
+        }
+    }
+
+
+    catch (err) {
+        console.log(err)
+        res.status(500).json({
+            error: err
+        })
+    }
+
+}
+
