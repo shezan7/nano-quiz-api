@@ -66,8 +66,7 @@ exports.view_quizDetails = async (req, res, next) => {
                     eh.total_question,
                     eh.marks,
                     eh.time,
-                    eh.question,
-                    eh.rank
+                    eh.question
                 FROM
                     quiz_app.users u,
                     quiz_app.exam_history eh,
@@ -197,12 +196,12 @@ exports.view_AllQuizDetailsTutor = async (req, res, next) => {
     // console.log("list", userQuizlist);
 
     try {
-        if (userQuizlist === undefined || userQuizlist.length === 0) {
-            console.log("two")
-            return res.status(404).send({ message: "Quiz is not found!!!" });
-        } else {
-            const quizDetailsTutor = await db.query(
-                `SELECT
+        // if (userQuizlist === undefined || userQuizlist.length === 0) {
+        //     console.log("two")
+        //     return res.status(404).send({ message: "Quiz is not found!!!" });
+        // } else {
+        const quizDetailsTutor = await db.query(
+            `SELECT
                     u.id,
                     u.email,
                     u.name,
@@ -210,23 +209,27 @@ exports.view_AllQuizDetailsTutor = async (req, res, next) => {
                     eh.quiz_name,
                     eh.total_question,
                     eh.time,
-                    eh.marks,
-                    eh.rank
+                    eh.marks
                 FROM
                     quiz_app.users u,
+                    quiz_app.quiz q,
                     quiz_app.exam_history eh,
+                    quiz_app.user_quiz_mapping uqm,
                     quiz_app.user_exam_history_mapping uehm
                 WHERE
-                    u.id = uehm.user_id
-                    AND eh.id = uehm.exam_history_id;`
-                , {
-                    type: QueryTypes.SELECT
-                })
-
-            res.json({
-                message: "Find successfully", quizDetailsTutor
+                u.id = uehm.user_id
+                AND uehm.exam_history_id = eh.id        
+                AND eh.quiz_name = q.quiz_name
+                AND q.id = uqm.quiz_id
+                AND uqm.user_id = ${req.user.id};`
+            , {
+                type: QueryTypes.SELECT
             })
-        }
+
+        res.json({
+            message: "Find successfully", quizDetailsTutor
+        })
+        // }
     }
 
 
