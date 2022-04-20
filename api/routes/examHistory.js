@@ -8,14 +8,14 @@ const ExamHistoryController = require('../controllers/examHistory')
 
 router.use(checkAuth)
 
-router.get("/exam-history/view-all-quiz-details", checkUser(15), ExamHistoryController.view_AllQuizDetails);
+// router.get("/exam-history/view-all-quiz-details", checkUser(15), ExamHistoryController.view_AllQuizDetails);
 
 router.get("/exam-history/view-quiz-details", checkUser(7), ExamHistoryController.view_quizDetails);
 
 router.post("/exam-history/create-quiz-details", checkUser(16), ExamHistoryController.create_quizDetails);
 
 
-router.get("/exam-history/view-all-quiz-details-admin", checkUser(15), ExamHistoryController.view_AllQuizDetailsAdmin);
+router.get("/exam-history/view-all-quiz-details", checkUser(15), ExamHistoryController.view_AllQuizDetailsAdmin);
 
 router.get("/exam-history/view-all-quiz-details-tutor", checkUser(4), ExamHistoryController.view_AllQuizDetailsTutor);
 
