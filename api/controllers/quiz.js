@@ -101,6 +101,11 @@ exports.create_quiz = async (req, res, next) => {
 
     try {
         const { quiz_name, total_question, questionlist, time, marks } = req.body;
+        if (quiz_name === undefined || total_question === undefined || questionlist === undefined || time === undefined || marks === undefined) {
+            return res.status(500).send({
+                message: "Something went wrong!"
+            });
+        }
 
         const newQuiz = await sequelizeQuiz.create({
             quiz_name,

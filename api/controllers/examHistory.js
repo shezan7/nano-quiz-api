@@ -103,15 +103,19 @@ exports.create_quizDetails = async (req, res, next) => {
     // const user_id = req.user.id
 
     try {
-        const { quiz_name, total_question, time, marks, question, rank } = req.body;
+        const { quiz_name, total_question, time, marks, question } = req.body;
+        if (quiz_name === undefined || total_question === undefined || question === undefined || time === undefined || marks === undefined) {
+            return res.status(500).send({
+                message: "Something went wrong!"
+            });
+        }
 
         const newQuizDetails = await sequelizeExamHistory.create({
             quiz_name,
             total_question,
             time,
             marks,
-            question,
-            rank
+            question
         })
         // console.log(newQuiz)
         // console.log("newQuizID", newQuiz.id)
