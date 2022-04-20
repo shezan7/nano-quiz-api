@@ -5,8 +5,6 @@ const { QueryTypes } = require('sequelize')
 const sequelizeExamHistory = require('../sequelize-models/ExamHistory')
 const sequelizeUserExamHistoryMapping = require('../sequelize-models/UserExamHistoryMapping')
 
-const sequelizeUserQuizMapping = require('../sequelize-models/UserQuizMapping')
-
 
 exports.view_AllQuizDetails = async (req, res, next) => {
     try {
@@ -16,16 +14,8 @@ exports.view_AllQuizDetails = async (req, res, next) => {
         })
         console.log("quizDetails", quizDetailsAll);
 
-        // const test = await sequelize.query(`
-        // select * 
-        // from quiz_app.quiz
-        // `)
-
-        // console.log('tes', test);
-
         res.json({
             data: quizDetailsAll
-            // data: test[0]
         })
     }
     catch (err) {
@@ -180,26 +170,7 @@ exports.view_AllQuizDetailsAdmin = async (req, res, next) => {
 }
 
 exports.view_AllQuizDetailsTutor = async (req, res, next) => {
-
-    // console.log("one", req.user.id);
-
-    // const userQuizlist = [];
-    // const findUserId = await sequelizeUserQuizMapping.findAll({
-    //     where: {
-    //         user_id: req.user.id,
-    //     },
-    //     attributes: ["quiz_id"]
-    // })
-    // findUserId.map((val) => {
-    //     userQuizlist.push(val.quiz_id)
-    // })
-    // console.log("list", userQuizlist);
-
     try {
-        // if (userQuizlist === undefined || userQuizlist.length === 0) {
-        //     console.log("two")
-        //     return res.status(404).send({ message: "Quiz is not found!!!" });
-        // } else {
         const quizDetailsTutor = await db.query(
             `SELECT
                     u.id,
@@ -229,9 +200,7 @@ exports.view_AllQuizDetailsTutor = async (req, res, next) => {
         res.json({
             message: "Find successfully", quizDetailsTutor
         })
-        // }
     }
-
 
     catch (err) {
         console.log(err)

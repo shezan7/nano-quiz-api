@@ -5,7 +5,6 @@ const sequelizeQuiz = require('../sequelize-models/Quiz')
 const sequelizeUserQuizMapping = require('../sequelize-models/UserQuizMapping')
 
 
-
 exports.view_AllQuizlist = async (req, res, next) => {
     try {
         console.log("All Quizlist", req.body);
@@ -14,16 +13,8 @@ exports.view_AllQuizlist = async (req, res, next) => {
         })
         console.log("quizlist", quizAll);
 
-        // const test = await sequelize.query(`
-        // select * 
-        // from quiz_app.quiz
-        // `)
-
-        // console.log('tes', test);
-
         res.json({
             data: quizAll
-            // data: test[0]
         })
     }
     catch (err) {
