@@ -24,9 +24,6 @@ const exam_history = sequelize.define('exam_history', {
     question: {
         type: JSON,
         allowNull: false
-    },
-    rank: {
-        type: STRING
     }
 
 }, {

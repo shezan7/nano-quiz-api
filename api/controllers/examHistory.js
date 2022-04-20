@@ -12,7 +12,7 @@ exports.view_AllQuizDetails = async (req, res, next) => {
     try {
         console.log("All Quiz Details", req.body);
         const quizDetailsAll = await sequelizeExamHistory.findAll({
-            attributes: ['id', 'quiz_name', 'total_question', 'time', 'marks', 'question', 'rank']
+            attributes: ['id', 'quiz_name', 'total_question', 'time', 'marks', 'question']
         })
         console.log("quizDetails", quizDetailsAll);
 
@@ -151,8 +151,7 @@ exports.view_AllQuizDetailsAdmin = async (req, res, next) => {
                 eh.quiz_name,
                 eh.total_question,
                 eh.time,
-                eh.marks,
-                eh.rank
+                eh.marks
             FROM
                 quiz_app.users u,
                 quiz_app.exam_history eh,
